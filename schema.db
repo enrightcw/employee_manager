@@ -1,0 +1,27 @@
+CREATE DATABASE employee_db;
+USE employee_db;
+
+-- Create the table department.
+CREATE TABLE department (
+  id int AUTO_INCREMENT,
+  name varchar(30) NOT NULL,
+  PRIMARY KEY(id)
+);
+
+-- Create the table role
+CREATE TABLE role (
+  id INT AUTO_INCREMENT,
+  title VARCHAR(30) NOT NULL,
+  salary DECIMAL(5,2) NOT NULL,
+  -- * **department_id** -  INT to hold reference to department role belongs to
+  PRIMARY KEY(id)
+);
+
+-- Create the table employee
+CREATE TABLE employee(
+  id INT AUTO_INCREMENT,
+  firstname VARCHAR(30) NOT NULL,
+  lastname VARCHAR(30) NOT NULL,
+  -- * **role_id** - INT to hold reference to role employee has
+--   * **manager_id** - INT to hold reference to another employee that manager of the current employee. This field may be null if the employee has no manager
+)

@@ -1,0 +1,24 @@
+{
+  "name": "employee_manager",
+  "version": "1.0.0",
+  "description": "CLI driven app with Inquirer that allows users to manage the employees in a company.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enrightcw/employee_manager.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/enrightcw/employee_manager/issues"
+  },
+  "homepage": "https://github.com/enrightcw/employee_manager#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^7.2.0",
+    "mysql": "^2.18.1"
+  }
+}
