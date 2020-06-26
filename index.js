@@ -101,12 +101,9 @@ function addDepartment(){
 function addRole() {
     inquirer.prompt([
         {
-            type: "List",
+            type: "list",
             message: "Please select your role?", 
-            choices: function(value){
-                let rolearray = rolearray.map(roleName => {res.role})
-                return rolearray;
-                },
+            choices: ["Engineer", "Finance", "Legal", "Sales"],
             name: "addRoleTitle"
         },
         {
@@ -120,13 +117,45 @@ function addRole() {
             name: "deptID"
         }
     ]).then(function(answer){
-        connection.query("insert into role (title, salaray, department_id) values (?,?,?)", [answer.addRoleTitle, answer.salaryTot, answer.deptID], function( err, res){
+        connection.query("insert into role (title, salary, department_id) values (?,?,?)", [answer.addRoleTitle, answer.salaryTot, answer.deptID], function( err, res){
             if (err) throw (err);
             console.table(answer);
             start();
         })
     })
 };
+
+function addEmployee(){
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "What is the Employee's First Name?",
+            name: "employeeFirstName"
+        },
+        {
+            type: "input",
+            message: "What is the Employee's Last Name?",
+            name: "employeeLastName"
+        },
+        {
+            type: "input",
+            message: "What is the Employee's Role?",
+            name: "roleID"
+        },
+        {
+            type: "input",
+            message: "What is the Employee Manager's Name?",
+            name: "managerID"
+        }
+    ])
+    .then(function(answer){
+        connection.query("INSERT INTO employee (firstname, lastname, role_id, manager_id) VALUES (?,?,?,?)", [answer.employeeFirstName, answer.employeeLastName, answer.roleID, answer.managerID], function (err, res){
+            if (err) throw err;
+            console.table(res);
+            start();
+        })
+    })
+}
 
 //function to update employee role
 function updateEmployee(){
@@ -135,28 +164,19 @@ function updateEmployee(){
         if (err) throw err;
         console.table(res);
         
-        let choicearray = [];
-        let rolearray = [];
+        const choicearray = function(){
+            res.map(newRole => {res.lastname})
+            return res;
+        };
+        // let rolearray = [];
 
     inquirer.prompt([
         {
             type: "list",
-            name: "empChoice",
+            choices: choicearray,
             message: "Which employee would you like to update?",
-            choices: function(){
-                choicearray.map(empName => {res.name})
-                return choicearray;
-            },
-        },{
-            type:"list",
-            name:"roleChoice",
-            message: "What is this employee's new role?",
-            choices: function(){
-                rolearray.map(roleName => {res.role})
-                return rolearray;
-                }
-        }
-        
+            name: "empChoice"            
+        }        
         ]).then(function(result){
         console.log("You have entered: " + result.empChoice);
         });
