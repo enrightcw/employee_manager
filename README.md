@@ -4,6 +4,8 @@
 
 This is a CLI driven employee manager/tracker that allows the end user to view employees/managers/departments and add/remove/update.
 
+https://www.loom.com/share/420682cfc90d4b8b9679b21f0695b8fe
+
 ### Open Issues <img src= "https://img.shields.io/github/issues/enrightcw/employee_manager">
 
 # Table of Contents
