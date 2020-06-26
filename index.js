@@ -88,12 +88,12 @@ function addDepartment(){
     }).then(function(answer){
 
         //this still needs works
-        connection.query("Insert into Department (name) VALUES (?) "), [answer.deptName], function (err,res){
+        connection.query("Insert into Department (name) VALUES (?) ", [answer.deptName], function (err,res){
             if (err) throw (err);
             console.table(res)
             start();
             
-        }
+        })
     })
 }
 // start();
@@ -103,12 +103,10 @@ function addRole() {
         {
             type: "List",
             message: "Please select your role?", 
-            choices: [
-                "Engineer",
-                "Finance",
-                "Legal",
-                "Sales"
-            ],
+            choices: function(value){
+                let rolearray = rolearray.map(roleName => {res.role})
+                return rolearray;
+                },
             name: "addRoleTitle"
         },
         {
@@ -122,63 +120,47 @@ function addRole() {
             name: "deptID"
         }
     ]).then(function(answer){
-        connection.query("insert into role (x,y,z) values ???"), [answer.addRoleTitle, answer.salaryTot, answer.deptID], function( err, res){
+        connection.query("insert into role (title, salaray, department_id) values (?,?,?)", [answer.addRoleTitle, answer.salaryTot, answer.deptID], function( err, res){
             if (err) throw (err);
             console.table(answer);
             start();
-        }
+        })
     })
 };
 
+//function to update employee role
 function updateEmployee(){
   let query ="SELECT * FROM employee";
     connection.query(query, function(err,res){
         if (err) throw err;
         console.table(res);
-  
-  inquirer.prompt([
-    {
-        type: "list",
-        name: "empChoice",
-        message: "Which employee would you like to update?",
-        choices: function(value){
-          var choicearray = [];
-          for(var i=0; i < res.length; i++){
-            choicearray.push(res[i].itemname);
-          }
-          return choicearray;
-        },
-    }
-    
-    ]).then(function(result){
-      console.log("You have entered: " + result.empChoice);
+        
+        let choicearray = [];
+        let rolearray = [];
 
-      switch (result.empChoice){
-          case "Add Department":
-              addDepartment();
-              break;
-          case "Add Role":
-              addRole();
-              break;
-          case "Add Employee":
-              addEmployee();
-              break;
-          case "View Department":
-              viewDepartment();
-              break;
-          case "View Roles":
-              viewRoles();
-              break;
-          case "View Employees":
-              viewEmployees();
-              break;
-          case "Update Employee Role":
-              updateEmployee();
-              break;
-              default:
-              quit();
-              
-      }
+    inquirer.prompt([
+        {
+            type: "list",
+            name: "empChoice",
+            message: "Which employee would you like to update?",
+            choices: function(){
+                choicearray.map(empName => {res.name})
+                return choicearray;
+            },
+        },{
+            type:"list",
+            name:"roleChoice",
+            message: "What is this employee's new role?",
+            choices: function(){
+                rolearray.map(roleName => {res.role})
+                return rolearray;
+                }
+        }
+        
+        ]).then(function(result){
+        console.log("You have entered: " + result.empChoice);
+        });
+        
 })
 }
 
